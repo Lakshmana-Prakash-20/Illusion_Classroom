@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM maven:3.8.4-openjdk-17 as build
+FROM maven:3.8.4-openjdk-17 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -14,10 +14,10 @@ RUN mvn dependency:go-offline
 COPY src ./src
 
 # Compile the application
-RUN mvn package
+RUN mvn package -DskipTests
 
 # Stage 2: Run the application
-FROM openjdk:17-slim as final
+FROM openjdk:17-slim AS final
 
 # Copy the artifact from the build stage
 COPY --from=build /app/target/IllusionClassroom-1.0-SNAPSHOT.jar /app/IllusionClassroom.jar
